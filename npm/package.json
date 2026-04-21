@@ -1,0 +1,19 @@
+{
+  "name": "51pm-cli",
+  "version": "1.0.2",
+  "description": "51PM项目管理系统CLI工具",
+  "bin": {
+    "51pm": "bin/run.js",
+    "51pm-cli": "bin/run.js"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "prepublishOnly": "node scripts/build.js"
+  },
+  "files": [
+    "bin/",
+    "platform/"
+  ],
+  "keywords": ["51pm", "cli", "project-management"],
+  "license": "MIT"
+}
