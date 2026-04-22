@@ -64,12 +64,49 @@ Token 可从 51PM 前端页面登录后，在浏览器 F12 -> Application -> Loc
 51pm task list --json
 
 # 指定 API 地址
-51pm --base-url http://10.67.8.189:8082 task list --json
+51pm --base-url http://10.67.8.189:8888 task list --json
 ```
+
+### 用户名称转用户ID
+
+`--assigned-to` 参数需要传入用户ID（int），但用户通常提供的是姓名。需要先通过 `user lookup` 命令将姓名转换为用户ID：
+
+```bash
+51pm user lookup --name <用户名称> --json
+```
+
+返回示例：
+```json
+[
+  {
+    "id": 42,
+    "nickname": "张三",
+    "realname": "张三",
+    "account": "zhangsan"
+  }
+]
+```
+
+#### 典型工作流
+
+用户说："查看张三的任务"
+
+1. 先查用户ID：
+```bash
+51pm user lookup --name 张三 --json
+```
+2. 从返回结果中取 `id` 字段（如 42）
+3. 再查任务：
+```bash
+51pm task list --assigned-to 42 --json
+```
+
+> **注意**：如果 `user lookup` 返回多个匹配用户，需展示候选列表请用户确认后再查询任务。
 
 ## 行为策略
 
 - **AI Agent 调用时始终使用 --json 参数**，以便解析结构化数据向用户展示
+- **当用户通过姓名指定指派人时，必须先调用 `51pm user lookup --name xxx --json` 获取用户ID，再传入 `--assigned-to`**
 - 如果返回 total > per_page，说明还有更多数据，主动告知用户
 - 遇到请求失败时可重试 1 次
 - 若返回 Token 过期错误，提示用户重新执行 51pm login
