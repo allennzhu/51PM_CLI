@@ -11,6 +11,8 @@ metadata:
 
 > `51pm` 是51PM项目管理系统的命令行工具，所有操作通过执行 `51pm` 命令完成。
 
+> **重要**：`task list` 命令会自动同时查询**项目任务**和**非项目任务**两种数据并合并输出，无需分别调用。
+
 ## 前提条件
 
 使用前必须先完成登录：
@@ -66,6 +68,48 @@ Token 可从 51PM 前端页面登录后，在浏览器 F12 -> Application -> Loc
 # 指定 API 地址
 51pm --base-url http://10.67.8.189:8888 task list --json
 ```
+
+#### JSON 输出结构
+
+`--json` 输出的统一结构：
+```json
+{
+  "data": [
+    {
+      "id": 123,
+      "source": "project",
+      "project_name": "XX项目",
+      "name": "任务名称",
+      "assigned_to": "474",
+      "status": "done",
+      "start_date": "2026-01-01",
+      "end_date": "2026-01-05",
+      "plan_hour": 20,
+      "consumed_hour": 15,
+      "task_process": 100
+    },
+    {
+      "id": 456,
+      "source": "non-project",
+      "project_name": "XX非项目",
+      "name": "非项目任务名称",
+      "assigned_to": "474",
+      "status": "done",
+      "start_date": "2026-01-06",
+      "end_date": "2026-01-06",
+      "plan_hour": 8,
+      "consumed_hour": 8,
+      "task_process": 0
+    }
+  ],
+  "project_total": 5,
+  "non_project_total": 3,
+  "total": 8
+}
+```
+
+- `source` 字段区分任务来源：`"project"`（项目任务）或 `"non-project"`（非项目任务）
+- `project_total` 和 `non_project_total` 分别统计两种任务的总数
 
 ### 用户名称转用户ID
 
