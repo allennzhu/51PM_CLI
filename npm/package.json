@@ -1,6 +1,6 @@
 {
   "name": "51pm-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "51PM项目管理系统CLI工具",
   "bin": {
     "51pm": "bin/run.js",

@@ -294,7 +294,7 @@ func fetchTaskList(token string, params url.Values) ([]*Task, int, error) {
 		return nil, 0, fmt.Errorf("读取响应失败: %w", err)
 	}
 
-	if resp.StatusCode == http.StatusUnauthorized {
+	if resp.StatusCode == 444 {
 		return nil, 0, fmt.Errorf("Token已过期，正在自动重新登录...请重新执行命令")
 	}
 	if resp.StatusCode != http.StatusOK {
@@ -330,7 +330,7 @@ func fetchNotTaskList(token string, params url.Values) ([]*NotTask, int, error) 
 		return nil, 0, fmt.Errorf("读取响应失败: %w", err)
 	}
 
-	if resp.StatusCode == http.StatusUnauthorized {
+	if resp.StatusCode == 444 {
 		return nil, 0, fmt.Errorf("Token已过期，正在自动重新登录...请重新执行命令")
 	}
 	if resp.StatusCode != http.StatusOK {

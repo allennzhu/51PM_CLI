@@ -75,7 +75,7 @@ var userLookupCmd = &cobra.Command{
 			return fmt.Errorf("读取响应失败: %w", err)
 		}
 
-		if resp.StatusCode == http.StatusUnauthorized {
+		if resp.StatusCode == 444 {
 			return fmt.Errorf("Token已过期，正在自动重新登录...请重新执行命令")
 		}
 		if resp.StatusCode != http.StatusOK {

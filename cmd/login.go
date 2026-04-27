@@ -161,7 +161,7 @@ func verifyToken(token string) bool {
 	defer resp.Body.Close()
 	io.Copy(io.Discard, resp.Body)
 
-	return resp.StatusCode != http.StatusUnauthorized
+	return resp.StatusCode != 444
 }
 
 // ensureToken 确保 token 存在且有效，否则自动触发浏览器登录
