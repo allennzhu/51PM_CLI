@@ -130,7 +130,7 @@ var taskListCmd = &cobra.Command{
 	Short: "获取任务列表",
 	Long:  `根据筛选条件获取51PM项目任务和非项目任务列表（自动合并）。`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		localToken, err := loadToken()
+		localToken, err := ensureToken()
 		if err != nil {
 			return err
 		}
@@ -295,7 +295,7 @@ func fetchTaskList(token string, params url.Values) ([]*Task, int, error) {
 	}
 
 	if resp.StatusCode == http.StatusUnauthorized {
-		return nil, 0, fmt.Errorf("Token已过期，请重新执行 login 命令")
+		return nil, 0, fmt.Errorf("Token已过期，正在自动重新登录...请重新执行命令")
 	}
 	if resp.StatusCode != http.StatusOK {
 		return nil, 0, fmt.Errorf("HTTP %d: %s", resp.StatusCode, string(respBody))
@@ -331,7 +331,7 @@ func fetchNotTaskList(token string, params url.Values) ([]*NotTask, int, error) 
 	}
 
 	if resp.StatusCode == http.StatusUnauthorized {
-		return nil, 0, fmt.Errorf("Token已过期，请重新执行 login 命令")
+		return nil, 0, fmt.Errorf("Token已过期，正在自动重新登录...请重新执行命令")
 	}
 	if resp.StatusCode != http.StatusOK {
 		return nil, 0, fmt.Errorf("HTTP %d: %s", resp.StatusCode, string(respBody))

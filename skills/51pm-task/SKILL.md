@@ -15,19 +15,19 @@ metadata:
 
 ## 前提条件
 
-使用前必须先完成登录：
-```bash
-51pm login --token <TOKEN>
-```
-Token 可从 51PM 前端页面登录后，在浏览器 F12 -> Application -> Local Storage -> oauthToken 获取。
+无需手动登录。首次使用任何命令时，如果未登录或 Token 已过期，CLI 会自动打开浏览器引导用户登录 51PM，登录完成后自动获取 Token 并继续执行命令。
 
-如果命令返回"未登录"或"Token已过期"，提示用户重新执行 login。
+如需手动登录，也可执行：
+```bash
+51pm login --browser       # 浏览器自动登录（推荐）
+51pm login --token <TOKEN>  # 直接传入token
+```
 
 ## 全局参数
 
 | 参数 | 说明 | 默认值 |
 |------|------|--------|
-| --base-url | 51PM API 服务地址 | http://localhost:8888 |
+| --base-url | 51PM API 服务地址 | http://51pm.51aes.com:771 |
 
 ## 命令说明
 
@@ -153,4 +153,4 @@ Token 可从 51PM 前端页面登录后，在浏览器 F12 -> Application -> Loc
 - **当用户通过姓名指定指派人时，必须先调用 `51pm user lookup --name xxx --json` 获取用户ID，再传入 `--assigned-to`**
 - 如果返回 total > per_page，说明还有更多数据，主动告知用户
 - 遇到请求失败时可重试 1 次
-- 若返回 Token 过期错误，提示用户重新执行 51pm login
+- 若返回 Token 过期错误，CLI 会自动触发浏览器重新登录，无需用户手动操作

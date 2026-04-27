@@ -10,6 +10,7 @@ import (
 )
 
 var baseURL string
+var frontendURL string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -35,5 +36,6 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&baseURL, "base-url", "http://localhost:8888", "51PM API 服务地址")
+	rootCmd.PersistentFlags().StringVar(&baseURL, "base-url", "http://51pm.51aes.com:218", "51PM 后端 API 服务地址")
+	rootCmd.PersistentFlags().StringVar(&frontendURL, "frontend-url", "http://51pm.51aes.com:771", "51PM 前端页面地址（用于浏览器登录）")
 }

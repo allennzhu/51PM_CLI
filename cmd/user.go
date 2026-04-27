@@ -49,7 +49,7 @@ var userLookupCmd = &cobra.Command{
 			return fmt.Errorf("请通过 --name 参数或直接传入用户名称")
 		}
 
-		localToken, err := loadToken()
+		localToken, err := ensureToken()
 		if err != nil {
 			return err
 		}
@@ -76,7 +76,7 @@ var userLookupCmd = &cobra.Command{
 		}
 
 		if resp.StatusCode == http.StatusUnauthorized {
-			return fmt.Errorf("Token已过期，请重新执行 login 命令")
+			return fmt.Errorf("Token已过期，正在自动重新登录...请重新执行命令")
 		}
 		if resp.StatusCode != http.StatusOK {
 			return fmt.Errorf("HTTP %d: %s", resp.StatusCode, string(respBody))
